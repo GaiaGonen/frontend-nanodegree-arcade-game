@@ -24,13 +24,27 @@ Enemy.prototype.render = function() {
 // Now write your own player class
 // This class requires an update(), render() and
 // a handleInput() method.
+class Player {
+  constructor(x = 0, y = 0, sprite = 'images/char-cat-girl.png') {
+    this.sprite = sprite;
+    this.x = x;
+    this.y = y;
+  }
+  update() {}
 
+  render() {}
+
+  handleInput() {}
+}
 
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
-
-
+let allEnemies = [];
+for (i = 0; i < 3; i++) {
+  const enemy = new Enemy;
+  allEnemies[i] = enemy;
+}
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.

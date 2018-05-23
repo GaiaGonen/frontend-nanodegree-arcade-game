@@ -31,7 +31,7 @@ Enemy.prototype.render = function() {
 // This class requires an update(), render() and
 // a handleInput() method.
 class Player {
-  constructor(x = 252.5, y = 303, sprite = 'images/char-cat-girl.png') {
+  constructor(x = 204, y = 401, sprite = 'images/char-cat-girl.png') {
     this.sprite = sprite;
     this.x = x;
     this.y = y;
@@ -48,13 +48,54 @@ class Player {
     return this.y;
   }
 
-  update() {}
+  update(moveX, moveY) {
+    this.x += moveX;
+    this.y += moveY;
+  }
 
   render() {
       ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
   }
 
-  handleInput() {}
+  handleInput(keyCode) {
+  //   const STEP = 101;
+  //   let verticalLocation = 1;
+  //   let horizontalLocation = 3;
+  //   switch (keyCode) {
+  //     case 'right':
+  //       if (horizontalLocation = 5) {
+  //         break;
+  //       } else {
+  //         update(STEP, 0);
+  //         horizontalLocation++;
+  //         break;
+  //       }
+  //     case 'left':
+  //       if (horizontalLocation = 1) {
+  //         break;
+  //       } else {
+  //         update(-STEP, 0);
+  //         horizontalLocation--;
+  //         break;
+  //       }
+  //     case 'up':
+  //       if (verticalLocation = 6) {
+  //         break;
+  //       } else {
+  //         update(0, -STEP);
+  //         verticalLocation++;
+  //         break;
+  //       }
+  //     case 'down':
+  //       if (verticalLocation = 1) {
+  //         break;
+  //       } else {
+  //         update(0, -STEP);
+  //         verticalLocation++;
+  //         break;
+  //       }
+  //   }
+  }
 }
 
 // Now instantiate your objects.

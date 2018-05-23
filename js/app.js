@@ -1,12 +1,12 @@
 // Enemies our player must avoid
-var Enemy = function(x = -100, y = 50) {
+var Enemy = function(y = 50) {
     // Variables applied to each of our instances go here,
     // we've provided one for you to get started
 
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
     this.sprite = 'images/enemy-bug.png';
-    this.x = x;
+    this.x = -(Math.floor(Math.random() * 1000) + 100);
     this.y = y;
 };
 
@@ -16,7 +16,10 @@ Enemy.prototype.update = function(dt) {
     // You should multiply any movement by the dt parameter
     // which will ensure the game runs at the same speed for
     // all computers.
-    this.x += 5;
+    this.x += (Math.random() * 500 + 1) * dt;
+    if (this.x > 505) {
+      this.x = -(Math.floor(Math.random() * 300) + 30);
+    }
 };
 
 // Draw the enemy on the screen, required method for game
@@ -28,7 +31,7 @@ Enemy.prototype.render = function() {
 // This class requires an update(), render() and
 // a handleInput() method.
 class Player {
-  constructor(x = 0, y = 0, sprite = 'images/char-cat-girl.png') {
+  constructor(x = 252.5, y = 303, sprite = 'images/char-cat-girl.png') {
     this.sprite = sprite;
     this.x = x;
     this.y = y;
@@ -47,7 +50,9 @@ class Player {
 
   update() {}
 
-  render() {}
+  render() {
+      ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+  }
 
   handleInput() {}
 }
@@ -57,8 +62,10 @@ class Player {
 // Place the player object in a variable called player
 let allEnemies = [];
 for (i = 0, j=50; i < 3; i++, j += 80) {
-  const enemy = new Enemy(-100, j);
-  allEnemies[i] = enemy;
+  for(n = 0; n < 2; n++) {
+    const enemy = new Enemy(j);
+    allEnemies.push(enemy);
+ }
 }
 
 const player = new Player();

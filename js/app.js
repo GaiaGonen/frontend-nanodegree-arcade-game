@@ -40,16 +40,12 @@ class Player {
     this.x = this.stepsx[this.xPosition];
     this.y = this.stepsy[this.yPosition];
   }
-  getSprite() {
-    return this.sprite;
-  }
 
-  getX() {
-    return this.x;
-  }
-
-  getY() {
-    return this.y;
+  resetPosition() {
+    this.xPosition = 2;
+    this.yPosition = 0;
+    this.x = this.stepsx[this.xPosition];
+    this.y = this.stepsy[this.yPosition];
   }
 
   update(direction) {

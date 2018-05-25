@@ -1,30 +1,30 @@
 // Enemies our player must avoid
 var Enemy = function(y = 50) {
-    // Variables applied to each of our instances go here,
-    // we've provided one for you to get started
+  // Variables applied to each of our instances go here,
+  // we've provided one for you to get started
 
-    // The image/sprite for our enemies, this uses
-    // a helper we've provided to easily load images
-    this.sprite = 'images/enemy-bug.png';
-    this.x = -(Math.floor(Math.random() * 1000) + 100);
-    this.y = y;
+  // The image/sprite for our enemies, this uses
+  // a helper we've provided to easily load images
+  this.sprite = 'images/enemy-bug.png';
+  this.x = -(Math.floor(Math.random() * 1000) + 100);
+  this.y = y;
 };
 
 // Update the enemy's position, required method for game
 // Parameter: dt, a time delta between ticks
 Enemy.prototype.update = function(dt) {
-    // You should multiply any movement by the dt parameter
-    // which will ensure the game runs at the same speed for
-    // all computers.
-    this.x += (Math.random() * 500 + 1) * dt;
-    if (this.x > 505) {
-      this.x = -(Math.floor(Math.random() * 300) + 30);
-    }
+  // You should multiply any movement by the dt parameter
+  // which will ensure the game runs at the same speed for
+  // all computers.
+  this.x += (Math.random() * 500 + 1) * dt;
+  if (this.x > 505) {
+    this.x = -(Math.floor(Math.random() * 300) + 30);
+  }
 };
 
 // Draw the enemy on the screen, required method for game
 Enemy.prototype.render = function() {
-    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+  ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
 // Now write your own player class
@@ -33,8 +33,12 @@ Enemy.prototype.render = function() {
 class Player {
   constructor(x = 204, y = 401, sprite = 'images/char-cat-girl.png') {
     this.sprite = sprite;
-    this.x = x;
-    this.y = y;
+    this.stepsx = [1, 102, 203, 304, 405];
+    this.stepsy = [406, 325, 244, 163, 82, 1];
+    this.xPosition = 2;
+    this.yPosition = 0;
+    this.x = this.stepsx[this.xPosition];
+    this.y = this.stepsy[this.yPosition];
   }
   getSprite() {
     return this.sprite;
@@ -48,53 +52,45 @@ class Player {
     return this.y;
   }
 
-  update(moveX, moveY) {
-    this.x += moveX;
-    this.y += moveY;
+  update(direction) {
+    switch (direction) {
+      case 'up':
+      this.yPosition++;
+      this.y = this.stepsy[this.yPosition];
+      break;
+      case 'down':
+      this.yPosition--;
+      this.y = this.stepsy[this.yPosition];
+      break;
+      case 'right':
+      this.xPosition++;
+      this.x = this.stepsx[this.xPosition];
+      break;
+      case 'left':
+      this.xPosition--;
+      this.x = this.stepsx[this.xPosition];
+      break;
+    }
   }
 
   render() {
-      ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
   }
 
   handleInput(keyCode) {
-  //   const STEP = 101;
-  //   let verticalLocation = 1;
-  //   let horizontalLocation = 3;
-  //   switch (keyCode) {
-  //     case 'right':
-  //       if (horizontalLocation = 5) {
-  //         break;
-  //       } else {
-  //         update(STEP, 0);
-  //         horizontalLocation++;
-  //         break;
-  //       }
-  //     case 'left':
-  //       if (horizontalLocation = 1) {
-  //         break;
-  //       } else {
-  //         update(-STEP, 0);
-  //         horizontalLocation--;
-  //         break;
-  //       }
-  //     case 'up':
-  //       if (verticalLocation = 6) {
-  //         break;
-  //       } else {
-  //         update(0, -STEP);
-  //         verticalLocation++;
-  //         break;
-  //       }
-  //     case 'down':
-  //       if (verticalLocation = 1) {
-  //         break;
-  //       } else {
-  //         update(0, -STEP);
-  //         verticalLocation++;
-  //         break;
-  //       }
-  //   }
+    // return direction into update only if it's not taking us outside of the limits
+    if (keyCode == 'up' && this.yPosition + 1 < this.stepsy.length) {
+      this.update(keyCode);
+    }
+    if (keyCode == 'down' && this.yPosition - 1 >= 0) {
+      this.update(keyCode);
+    }
+    if (keyCode == 'right' && this.xPosition + 1 < this.stepsx.length) {
+      this.update(keyCode);
+    }
+    if (keyCode == 'left' && this.xPosition - 1 >= 0) {
+      this.update(keyCode);
+    }
   }
 }
 
@@ -106,19 +102,19 @@ for (i = 0, j=50; i < 3; i++, j += 80) {
   for(n = 0; n < 2; n++) {
     const enemy = new Enemy(j);
     allEnemies.push(enemy);
- }
+  }
 }
 
 const player = new Player();
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
 document.addEventListener('keyup', function(e) {
-    var allowedKeys = {
-        37: 'left',
-        38: 'up',
-        39: 'right',
-        40: 'down'
-    };
+  var allowedKeys = {
+    37: 'left',
+    38: 'up',
+    39: 'right',
+    40: 'down'
+  };
 
-    player.handleInput(allowedKeys[e.keyCode]);
+  player.handleInput(allowedKeys[e.keyCode]);
 });

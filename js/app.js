@@ -8,6 +8,8 @@ var Enemy = function(y = 50) {
   this.sprite = 'images/enemy-bug.png';
   this.x = -(Math.floor(Math.random() * 1000) + 100);
   this.y = y;
+  this.width = 90;
+  this.height = 70;
 };
 
 // Update the enemy's position, required method for game
@@ -31,14 +33,16 @@ Enemy.prototype.render = function() {
 // This class requires an update(), render() and
 // a handleInput() method.
 class Player {
-  constructor(x = 204, y = 401, sprite = 'images/char-cat-girl.png') {
+  constructor(sprite = 'images/char-cat-girl.png') {
     this.sprite = sprite;
     this.stepsx = [1, 102, 203, 304, 405];
-    this.stepsy = [406, 325, 244, 163, 82, 1];
+    this.stepsy = [406, 323, 240, 157, 74, -9];
     this.xPosition = 2;
     this.yPosition = 0;
     this.x = this.stepsx[this.xPosition];
     this.y = this.stepsy[this.yPosition];
+    this.width = 90;
+    this.height = 70;
   }
 
   resetPosition() {

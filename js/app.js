@@ -5,37 +5,34 @@ var Enemy = function(y = 50) {
 
   // The image/sprite for our enemies, this uses
   // a helper we've provided to easily load images
-  this.stepsx = [-503, -402, -302, -201, -100, 1, 102, 203, 304, 405];
+  // helper arrays to list the possible starting points for x and y positions
+  this.stepsx = [-503, -402, -302, -201, -100];
   this.stepsy = [240, 157, 74];
-  this.sprite = 'images/enemy-bug.png';
-  this.xPosition = Math.floor(Math.random() * 5);
+  // calculate randomly the place where the enemy starts
   this.yPosition = Math.floor(Math.random() * 4);
+  this.xPosition = Math.floor(Math.random() * 5);
   this.x = this.stepsx[this.xPosition];
   this.y = this.stepsy[this.yPosition];
-  this.width = 90;
+
+  this.sprite = 'images/enemy-bug.png';
+  // indicates the width and height of an enemy
+  this.width = 50;
   this.height = 70;
 };
 
 // Update the enemy's position, required method for game
 // Parameter: dt, a time delta between ticks
 Enemy.prototype.update = function(dt) {
-  // You should multiply any movement by the dt parameter
-  // which will ensure the game runs at the same speed for
-  // all computers.
+  // checks if the enemy reached the end of the screen
+  // if it did it will return to the start
   if (this.x > 505) {
-    this.x = -(Math.floor(Math.random() * 300) + 30);
     this.yPosition = Math.floor(Math.random() * 4);
+    this.xPosition = Math.floor(Math.random() * 5);
     this.y = this.stepsy[this.yPosition];
+    this.x = this.stepsx[this.xPosition];
   } else {
     this.x += (Math.random() * 500 + 1) * dt;
   }
-  // if (this.xPosition == this.stepsx.length - 1) {
-  //   this.xPosition = Math.floor(Math.random() * 5);
-  //   this.x = this.stepsx[this.xPosition];
-  // } else {
-  //   this.xPosition++;
-  //   this.x = this.stepsx[this.xPosition] ;
-  // }
 };
 
 // Draw the enemy on the screen, required method for game
@@ -49,8 +46,10 @@ Enemy.prototype.render = function() {
 class Player {
   constructor(sprite = 'images/char-cat-girl.png') {
     this.sprite = sprite;
+    // helper arrays of the steps available for the player
     this.stepsx = [1, 102, 203, 304, 405];
     this.stepsy = [406, 323, 240, 157, 74, -9];
+    // sets starting point for the player
     this.xPosition = 2;
     this.yPosition = 0;
     this.x = this.stepsx[this.xPosition];
@@ -59,6 +58,7 @@ class Player {
     this.height = 70;
   }
 
+  // resets back the player position
   resetPosition() {
     this.xPosition = 2;
     this.yPosition = 0;
@@ -66,9 +66,11 @@ class Player {
     this.y = this.stepsy[this.yPosition];
   }
 
+  // gets direction from handle input and update the player's position accordingly
   update(direction) {
     let finishGame = false;
-    if (this.yPosition == this.stepsy.length) {
+    // checks if we reached the end point for the game and if so set finishGame to true;
+    if (this.yPosition == this.stepsy.length - 1) {
       finishGame = true;
     }
     switch (direction) {
@@ -95,6 +97,7 @@ class Player {
     }
   }
 
+  // renders the player image
   render() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
   }

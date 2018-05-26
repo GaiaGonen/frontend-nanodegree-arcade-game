@@ -161,7 +161,7 @@ var Engine = (function(global) {
       // algorithm for checking collision taken from http://blog.sklambert.com/html5-canvas-game-2d-collision-detection
       if (enemy.x < player.x + player.width  && enemy.x + enemy.width  > player.x &&
         enemy.y < player.y + player.height && enemy.y + enemy.height > player.y) {
-          player.resetPosition();
+          reset();
         }
     });
 

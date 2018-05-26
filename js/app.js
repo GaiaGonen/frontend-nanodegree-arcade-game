@@ -5,9 +5,13 @@ var Enemy = function(y = 50) {
 
   // The image/sprite for our enemies, this uses
   // a helper we've provided to easily load images
+  this.stepsx = [-503, -402, -302, -201, -100, 1, 102, 203, 304, 405];
+  this.stepsy = [240, 157, 74];
   this.sprite = 'images/enemy-bug.png';
-  this.x = -(Math.floor(Math.random() * 1000) + 100);
-  this.y = y;
+  this.xPosition = Math.floor(Math.random() * 5);
+  this.yPosition = Math.floor(Math.random() * 4);
+  this.x = this.stepsx[this.xPosition];
+  this.y = this.stepsy[this.yPosition];
   this.width = 90;
   this.height = 70;
 };
@@ -18,10 +22,20 @@ Enemy.prototype.update = function(dt) {
   // You should multiply any movement by the dt parameter
   // which will ensure the game runs at the same speed for
   // all computers.
-  this.x += (Math.random() * 500 + 1) * dt;
   if (this.x > 505) {
     this.x = -(Math.floor(Math.random() * 300) + 30);
+    this.yPosition = Math.floor(Math.random() * 4);
+    this.y = this.stepsy[this.yPosition];
+  } else {
+    this.x += (Math.random() * 500 + 1) * dt;
   }
+  // if (this.xPosition == this.stepsx.length - 1) {
+  //   this.xPosition = Math.floor(Math.random() * 5);
+  //   this.x = this.stepsx[this.xPosition];
+  // } else {
+  //   this.xPosition++;
+  //   this.x = this.stepsx[this.xPosition] ;
+  // }
 };
 
 // Draw the enemy on the screen, required method for game
@@ -53,6 +67,10 @@ class Player {
   }
 
   update(direction) {
+    let finishGame = false;
+    if (this.yPosition == this.stepsy.length) {
+      finishGame = true;
+    }
     switch (direction) {
       case 'up':
       this.yPosition++;
@@ -70,6 +88,10 @@ class Player {
       this.xPosition--;
       this.x = this.stepsx[this.xPosition];
       break;
+    }
+    if (finishGame) {
+      alert('you win!');
+      player.resetPosition();
     }
   }
 

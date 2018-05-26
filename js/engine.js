@@ -163,15 +163,16 @@ var Engine = (function(global) {
         enemy.y < player.y + player.height && enemy.y + enemy.height > player.y) {
           player.resetPosition();
         }
-      });
-    }
+    });
+
+  }
 
     /* This function does nothing but it could have been a good place to
     * handle game reset states - maybe a new game menu or a game over screen
     * those sorts of things. It's only called once by the init() method.
     */
     function reset() {
-      // noop
+      player.resetPosition();
     }
 
     /* Go ahead and load all of the images we know we're going to need to

@@ -1,7 +1,7 @@
 Gaia's Classic Arcade Game for Udacity's Nanodegree
 ================================================
 
-Live game can be found here: https://gaiagong.github.io/frontend-nanodegree-arcade-game/
+Live game can be found [here](https://gaiagonen.github.io/frontend-nanodegree-arcade-game/)
 
 A replica of a classic arcade game.
 
